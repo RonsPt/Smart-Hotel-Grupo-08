@@ -1,0 +1,578 @@
+
+=== CREATE INCOME PRODUCTS ===
+INPUT RECIBIDO: {
+    "id_client": "1",
+    "id_voucher_type": "1",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "series": "FOO1",
+    "number_serial": "00002",
+    "expiration_date": "2026-04-28",
+    "purchase_total": 1965
+}
+DATOS LIMPIOS: id_person=1, id_user=1, id_voucher_type=1
+voucher_series=FOO1, number_serial=00002, expiration_date=2026-04-28
+BIND PREPARADO: {
+    "id_person": "1",
+    "id_user": 1,
+    "id_voucher_type": "1",
+    "voucher_series": "FOO1",
+    "number_serial": "00002",
+    "expiration_date": "2026-04-28",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "tax": 0,
+    "purchase_total": 1965,
+    "status": 1
+}
+
+=== MODEL: create_income_products ===
+BIND RECIBIDO: {"id_person":"1","id_user":1,"id_voucher_type":"1","voucher_series":"FOO1","number_serial":"00002","expiration_date":"2026-04-28","id_payment_type":"1","id_payment_shape":"1","tax":0,"purchase_total":1965,"status":1}
+SQL: INSERT INTO income_products (
+                id_person, id_user, id_voucher_type, voucher_series, number_serial, 
+                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+            ) VALUES (
+                :id_person, :id_user, :id_voucher_type, :voucher_series, :number_serial,
+                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+            )
+❌ EXCEPTION: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_person' in 'INSERT INTO'
+CODE: 42S22
+RESULTADO DE INSERT: insertedId=
+❌ ERROR: No se pudo insertar (insertedId es false o null)
+
+=== CREATE INCOME PRODUCTS ===
+INPUT RECIBIDO: {
+    "id_client": "2",
+    "id_voucher_type": "2",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "series": "B001",
+    "number_serial": "001",
+    "expiration_date": "2026-04-28",
+    "purchase_total": 2.5
+}
+DATOS LIMPIOS: id_person=2, id_user=1, id_voucher_type=2
+voucher_series=B001, number_serial=001, expiration_date=2026-04-28
+BIND PREPARADO: {
+    "id_person": "2",
+    "id_user": 1,
+    "id_voucher_type": "2",
+    "voucher_series": "B001",
+    "number_serial": "001",
+    "expiration_date": "2026-04-28",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "tax": 0,
+    "purchase_total": 2.5,
+    "status": 1
+}
+
+=== MODEL: create_income_products ===
+BIND RECIBIDO: {"id_person":"2","id_user":1,"id_voucher_type":"2","voucher_series":"B001","number_serial":"001","expiration_date":"2026-04-28","id_payment_type":"1","id_payment_shape":"1","tax":0,"purchase_total":2.5,"status":1}
+SQL: INSERT INTO income_products (
+                id_person, id_user, id_voucher_type, voucher_series, number_serial, 
+                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+            ) VALUES (
+                :id_person, :id_user, :id_voucher_type, :voucher_series, :number_serial,
+                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+            )
+❌ EXCEPTION: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_person' in 'INSERT INTO'
+CODE: 42S22
+RESULTADO DE INSERT: insertedId=
+❌ ERROR: No se pudo insertar (insertedId es false o null)
+
+=== CREATE INCOME PRODUCTS ===
+INPUT RECIBIDO: {
+    "id_client": "2",
+    "id_voucher_type": "2",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "series": "B001",
+    "number_serial": "001",
+    "expiration_date": "2026-04-28",
+    "purchase_total": 2.5
+}
+DATOS LIMPIOS: id_person=2, id_user=1, id_voucher_type=2
+voucher_series=B001, number_serial=001, expiration_date=2026-04-28
+BIND PREPARADO: {
+    "id_person": "2",
+    "id_user": 1,
+    "id_voucher_type": "2",
+    "voucher_series": "B001",
+    "number_serial": "001",
+    "expiration_date": "2026-04-28",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "tax": 0,
+    "purchase_total": 2.5,
+    "status": 1
+}
+
+=== MODEL: create_income_products ===
+BIND RECIBIDO: {"id_person":"2","id_user":1,"id_voucher_type":"2","voucher_series":"B001","number_serial":"001","expiration_date":"2026-04-28","id_payment_type":"1","id_payment_shape":"1","tax":0,"purchase_total":2.5,"status":1}
+SQL: INSERT INTO income_products (
+                id_person, id_user, id_voucher_type, voucher_series, number_serial, 
+                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+            ) VALUES (
+                :id_person, :id_user, :id_voucher_type, :voucher_series, :number_serial,
+                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+            )
+❌ EXCEPTION: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_person' in 'INSERT INTO'
+CODE: 42S22
+RESULTADO DE INSERT: insertedId=
+❌ ERROR: No se pudo insertar (insertedId es false o null)
+
+=== CREATE INCOME PRODUCTS ===
+INPUT RECIBIDO: {
+    "id_client": "2",
+    "id_voucher_type": "2",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "series": "B001",
+    "number_serial": "001",
+    "expiration_date": "2026-04-28",
+    "purchase_total": 2.5
+}
+DATOS LIMPIOS: id_person=2, id_user=1, id_voucher_type=2
+voucher_series=B001, number_serial=001, expiration_date=2026-04-28
+BIND PREPARADO: {
+    "id_person": "2",
+    "id_user": 1,
+    "id_voucher_type": "2",
+    "voucher_series": "B001",
+    "number_serial": "001",
+    "expiration_date": "2026-04-28",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "tax": 0,
+    "purchase_total": 2.5,
+    "status": 1
+}
+
+=== MODEL: create_income_products ===
+BIND RECIBIDO: {"id_person":"2","id_user":1,"id_voucher_type":"2","voucher_series":"B001","number_serial":"001","expiration_date":"2026-04-28","id_payment_type":"1","id_payment_shape":"1","tax":0,"purchase_total":2.5,"status":1}
+SQL: INSERT INTO income_products (
+                id_person, id_user, id_voucher_type, voucher_series, number_serial, 
+                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+            ) VALUES (
+                :id_person, :id_user, :id_voucher_type, :voucher_series, :number_serial,
+                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+            )
+❌ EXCEPTION: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_person' in 'INSERT INTO'
+CODE: 42S22
+RESULTADO DE INSERT: insertedId=
+❌ ERROR: No se pudo insertar (insertedId es false o null)
+
+=== CREATE INCOME PRODUCTS ===
+INPUT RECIBIDO: {
+    "id_client": "2",
+    "id_voucher_type": "2",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "series": "B001",
+    "number_serial": "001",
+    "expiration_date": "2026-04-29",
+    "purchase_total": 11.5
+}
+DATOS LIMPIOS: id_person=2, id_user=1, id_voucher_type=2
+voucher_series=B001, number_serial=001, expiration_date=2026-04-29
+BIND PREPARADO: {
+    "id_person": "2",
+    "id_user": 1,
+    "id_voucher_type": "2",
+    "voucher_series": "B001",
+    "number_serial": "001",
+    "expiration_date": "2026-04-29",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "tax": 0,
+    "purchase_total": 11.5,
+    "status": 1
+}
+
+=== MODEL: create_income_products ===
+BIND RECIBIDO: {"id_person":"2","id_user":1,"id_voucher_type":"2","voucher_series":"B001","number_serial":"001","expiration_date":"2026-04-29","id_payment_type":"1","id_payment_shape":"1","tax":0,"purchase_total":11.5,"status":1}
+SQL: INSERT INTO income_products (
+                id_person, id_user, id_voucher_type, voucher_series, number_serial, 
+                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+            ) VALUES (
+                :id_person, :id_user, :id_voucher_type, :voucher_series, :number_serial,
+                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+            )
+❌ EXCEPTION: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_person' in 'INSERT INTO'
+CODE: 42S22
+RESULTADO DE INSERT: insertedId=
+❌ ERROR: No se pudo insertar (insertedId es false o null)
+
+=== CREATE INCOME PRODUCTS ===
+INPUT RECIBIDO: {
+    "id_client": "2",
+    "id_voucher_type": "2",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "series": "B001",
+    "number_serial": "002",
+    "expiration_date": "2026-04-28",
+    "purchase_total": 2.5
+}
+DATOS LIMPIOS: id_person=2, id_user=1, id_voucher_type=2
+voucher_series=B001, number_serial=002, expiration_date=2026-04-28
+BIND PREPARADO: {
+    "id_person": "2",
+    "id_user": 1,
+    "id_voucher_type": "2",
+    "voucher_series": "B001",
+    "number_serial": "002",
+    "expiration_date": "2026-04-28",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "tax": 0,
+    "purchase_total": 2.5,
+    "status": 1
+}
+
+=== MODEL: create_income_products ===
+BIND RECIBIDO: {"id_person":"2","id_user":1,"id_voucher_type":"2","voucher_series":"B001","number_serial":"002","expiration_date":"2026-04-28","id_payment_type":"1","id_payment_shape":"1","tax":0,"purchase_total":2.5,"status":1}
+SQL: INSERT INTO income_products (
+                id_person, id_user, id_voucher_type, voucher_series, number_serial, 
+                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+            ) VALUES (
+                :id_person, :id_user, :id_voucher_type, :voucher_series, :number_serial,
+                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+            )
+❌ EXCEPTION: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_person' in 'INSERT INTO'
+CODE: 42S22
+RESULTADO DE INSERT: insertedId=
+❌ ERROR: No se pudo insertar (insertedId es false o null)
+
+=== CREATE INCOME PRODUCTS ===
+INPUT RECIBIDO: {
+    "id_client": "1",
+    "id_voucher_type": "2",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "series": "B001",
+    "number_serial": "002",
+    "expiration_date": "2026-04-28",
+    "purchase_total": 2.5
+}
+DATOS LIMPIOS: id_person=1, id_user=1, id_voucher_type=2
+voucher_series=B001, number_serial=002, expiration_date=2026-04-28
+BIND PREPARADO: {
+    "id_person": "1",
+    "id_user": 1,
+    "id_voucher_type": "2",
+    "voucher_series": "B001",
+    "number_serial": "002",
+    "expiration_date": "2026-04-28",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "tax": 0,
+    "purchase_total": 2.5,
+    "status": 1
+}
+
+=== MODEL: create_income_products ===
+BIND RECIBIDO: {"id_person":"1","id_user":1,"id_voucher_type":"2","voucher_series":"B001","number_serial":"002","expiration_date":"2026-04-28","id_payment_type":"1","id_payment_shape":"1","tax":0,"purchase_total":2.5,"status":1}
+SQL: INSERT INTO income_products (
+                id_person, id_user, id_voucher_type, voucher_series, number_serial, 
+                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+            ) VALUES (
+                :id_person, :id_user, :id_voucher_type, :voucher_series, :number_serial,
+                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+            )
+❌ EXCEPTION: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_person' in 'INSERT INTO'
+CODE: 42S22
+RESULTADO DE INSERT: insertedId=
+❌ ERROR: No se pudo insertar (insertedId es false o null)
+
+=== CREATE INCOME PRODUCTS ===
+INPUT RECIBIDO: {
+    "id_client": "1",
+    "id_voucher_type": "1",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "series": "11111",
+    "number_serial": "11111",
+    "expiration_date": "2026-05-06",
+    "purchase_total": 2.5
+}
+DATOS LIMPIOS: id_client=1, id_user=1, id_voucher_type=1
+voucher_series=11111, number_serial=11111, expiration_date=2026-05-06
+BIND PREPARADO: {
+    "id_client": "1",
+    "id_user": 1,
+    "id_voucher_type": "1",
+    "voucher_series": "11111",
+    "number_serial": "11111",
+    "expiration_date": "2026-05-06",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "tax": 0,
+    "purchase_total": 2.5,
+    "status": 1
+}
+
+=== MODEL: create_income_products ===
+BIND RECIBIDO: {"id_client":"1","id_user":1,"id_voucher_type":"1","voucher_series":"11111","number_serial":"11111","expiration_date":"2026-05-06","id_payment_type":"1","id_payment_shape":"1","tax":0,"purchase_total":2.5,"status":1}
+SQL: INSERT INTO income_products (
+                id_client, id_user, id_voucher_type, voucher_series, number_serial, 
+                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+            ) VALUES (
+                :id_client, :id_user, :id_voucher_type, :voucher_series, :number_serial,
+                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+            )
+❌ EXCEPTION: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_client' in 'field list'
+CODE: 42S22
+RESULTADO DE INSERT: insertedId=
+❌ ERROR: No se pudo insertar (insertedId es false o null)
+
+=== CREATE INCOME PRODUCTS ===
+INPUT RECIBIDO: {
+    "id_client": "11",
+    "id_voucher_type": "1",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "series": "1",
+    "number_serial": "55555",
+    "expiration_date": "2026-05-07",
+    "purchase_total": 2.5
+}
+DATOS LIMPIOS: id_client=11, id_user=1, id_voucher_type=1
+voucher_series=1, number_serial=55555, expiration_date=2026-05-07
+BIND PREPARADO: {
+    "id_client": "11",
+    "id_user": 1,
+    "id_voucher_type": "1",
+    "voucher_series": "1",
+    "number_serial": "55555",
+    "expiration_date": "2026-05-07",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "tax": 0,
+    "purchase_total": 2.5,
+    "status": 1
+}
+
+=== MODEL: create_income_products ===
+BIND RECIBIDO: {"id_client":"11","id_user":1,"id_voucher_type":"1","voucher_series":"1","number_serial":"55555","expiration_date":"2026-05-07","id_payment_type":"1","id_payment_shape":"1","tax":0,"purchase_total":2.5,"status":1}
+SQL: INSERT INTO income_products (
+                id_client, id_user, id_voucher_type, voucher_series, number_serial, 
+                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+            ) VALUES (
+                :id_client, :id_user, :id_voucher_type, :voucher_series, :number_serial,
+                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+            )
+❌ EXCEPTION: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_client' in 'field list'
+CODE: 42S22
+RESULTADO DE INSERT: insertedId=
+❌ ERROR: No se pudo insertar (insertedId es false o null)
+
+=== CREATE INCOME PRODUCTS ===
+INPUT RECIBIDO: {
+    "id_client": "11",
+    "id_voucher_type": "1",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "series": "1",
+    "number_serial": "55555",
+    "expiration_date": "2026-05-07",
+    "purchase_total": 2.5
+}
+DATOS LIMPIOS: id_client=11, id_user=1, id_voucher_type=1
+voucher_series=1, number_serial=55555, expiration_date=2026-05-07
+BIND PREPARADO: {
+    "id_client": "11",
+    "id_user": 1,
+    "id_voucher_type": "1",
+    "voucher_series": "1",
+    "number_serial": "55555",
+    "expiration_date": "2026-05-07",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "tax": 0,
+    "purchase_total": 2.5,
+    "status": 1
+}
+
+=== MODEL: create_income_products ===
+BIND RECIBIDO: {"id_client":"11","id_user":1,"id_voucher_type":"1","voucher_series":"1","number_serial":"55555","expiration_date":"2026-05-07","id_payment_type":"1","id_payment_shape":"1","tax":0,"purchase_total":2.5,"status":1}
+SQL: INSERT INTO income_products (
+                id_client, id_user, id_voucher_type, voucher_series, number_serial, 
+                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+            ) VALUES (
+                :id_client, :id_user, :id_voucher_type, :voucher_series, :number_serial,
+                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+            )
+❌ EXCEPTION: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_client' in 'field list'
+CODE: 42S22
+RESULTADO DE INSERT: insertedId=
+❌ ERROR: No se pudo insertar (insertedId es false o null)
+
+=== CREATE INCOME PRODUCTS ===
+INPUT RECIBIDO: {
+    "id_client": "11",
+    "id_voucher_type": "1",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "series": "1",
+    "number_serial": "55555",
+    "expiration_date": "2026-05-07",
+    "purchase_total": 2.5
+}
+DATOS LIMPIOS: id_client=11, id_user=1, id_voucher_type=1
+voucher_series=1, number_serial=55555, expiration_date=2026-05-07
+BIND PREPARADO: {
+    "id_client": "11",
+    "id_user": 1,
+    "id_voucher_type": "1",
+    "voucher_series": "1",
+    "number_serial": "55555",
+    "expiration_date": "2026-05-07",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "tax": 0,
+    "purchase_total": 2.5,
+    "status": 1
+}
+
+=== MODEL: create_income_products ===
+BIND RECIBIDO: {"id_client":"11","id_user":1,"id_voucher_type":"1","voucher_series":"1","number_serial":"55555","expiration_date":"2026-05-07","id_payment_type":"1","id_payment_shape":"1","tax":0,"purchase_total":2.5,"status":1}
+SQL: INSERT INTO income_products (
+                id_client, id_user, id_voucher_type, voucher_series, number_serial, 
+                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+            ) VALUES (
+                :id_client, :id_user, :id_voucher_type, :voucher_series, :number_serial,
+                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+            )
+❌ EXCEPTION: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_client' in 'field list'
+CODE: 42S22
+RESULTADO DE INSERT: insertedId=
+❌ ERROR: No se pudo insertar (insertedId es false o null)
+
+=== CREATE INCOME PRODUCTS ===
+INPUT RECIBIDO: {
+    "id_client": "11",
+    "id_voucher_type": "1",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "series": "1",
+    "number_serial": "55555",
+    "expiration_date": "2026-05-07",
+    "purchase_total": 2.5
+}
+DATOS LIMPIOS: id_client=11, id_user=1, id_voucher_type=1
+voucher_series=1, number_serial=55555, expiration_date=2026-05-07
+BIND PREPARADO: {
+    "id_client": "11",
+    "id_user": 1,
+    "id_voucher_type": "1",
+    "voucher_series": "1",
+    "number_serial": "55555",
+    "expiration_date": "2026-05-07",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "tax": 0,
+    "purchase_total": 2.5,
+    "status": 1
+}
+
+=== MODEL: create_income_products ===
+BIND RECIBIDO: {"id_client":"11","id_user":1,"id_voucher_type":"1","voucher_series":"1","number_serial":"55555","expiration_date":"2026-05-07","id_payment_type":"1","id_payment_shape":"1","tax":0,"purchase_total":2.5,"status":1}
+SQL: INSERT INTO income_products (
+                id_client, id_user, id_voucher_type, voucher_series, number_serial, 
+                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+            ) VALUES (
+                :id_client, :id_user, :id_voucher_type, :voucher_series, :number_serial,
+                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+            )
+❌ EXCEPTION: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_client' in 'field list'
+CODE: 42S22
+RESULTADO DE INSERT: insertedId=
+❌ ERROR: No se pudo insertar (insertedId es false o null)
+
+=== CREATE INCOME PRODUCTS ===
+INPUT RECIBIDO: {
+    "id_client": "12",
+    "id_voucher_type": "1",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "series": "55555",
+    "number_serial": "55555555",
+    "expiration_date": "2026-05-06",
+    "purchase_total": 2.5
+}
+DATOS LIMPIOS: id_person=12, id_user=1, id_voucher_type=1
+voucher_series=55555, number_serial=55555555, expiration_date=2026-05-06
+BIND PREPARADO: {
+    "id_person": "12",
+    "id_user": 1,
+    "id_voucher_type": "1",
+    "voucher_series": "55555",
+    "number_serial": "55555555",
+    "expiration_date": "2026-05-06",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "tax": 0,
+    "purchase_total": 2.5,
+    "status": 1
+}
+
+=== MODEL: create_income_products ===
+BIND RECIBIDO: {"id_person":"12","id_user":1,"id_voucher_type":"1","voucher_series":"55555","number_serial":"55555555","expiration_date":"2026-05-06","id_payment_type":"1","id_payment_shape":"1","tax":0,"purchase_total":2.5,"status":1}
+SQL: INSERT INTO income_products (
+                id_person, id_user, id_voucher_type, voucher_series, number_serial, 
+                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+            ) VALUES (
+                :id_person, :id_user, :id_voucher_type, :voucher_series, :number_serial,
+                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+            )
+EXECUTE RESULT: TRUE
+✅ ÚLTIMO ID INSERTADO: 40
+RESULTADO DE INSERT: insertedId=40
+✅ EXITOSO: Ingreso creado con ID 40
+CREATE DETAILS - Input: {"productos":[{"id_income_products":"40","id_product":"1","product_code":"ZG011AQA","product_expiration_date":null,"quantity":1,"full_purchase":1,"selling_price":1,"subtotal":1},{"id_income_products":"40","id_product":"2","product_code":"TH045AKH","product_expiration_date":null,"quantity":1,"full_purchase":1.5,"selling_price":1.5,"subtotal":1.5}]}
+INSERT COUNT: 2, ERRORS: []
+
+=== CREATE INCOME PRODUCTS ===
+INPUT RECIBIDO: {
+    "id_client": "3",
+    "id_voucher_type": "1",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "series": "B001",
+    "number_serial": "002",
+    "expiration_date": "2026-05-06",
+    "purchase_total": 2.5
+}
+DATOS LIMPIOS: id_person=3, id_user=1, id_voucher_type=1
+voucher_series=B001, number_serial=002, expiration_date=2026-05-06
+BIND PREPARADO: {
+    "id_person": "3",
+    "id_user": 1,
+    "id_voucher_type": "1",
+    "voucher_series": "B001",
+    "number_serial": "002",
+    "expiration_date": "2026-05-06",
+    "id_payment_type": "1",
+    "id_payment_shape": "1",
+    "tax": 0,
+    "purchase_total": 2.5,
+    "status": 1
+}
+
+=== MODEL: create_income_products ===
+BIND RECIBIDO: {"id_person":"3","id_user":1,"id_voucher_type":"1","voucher_series":"B001","number_serial":"002","expiration_date":"2026-05-06","id_payment_type":"1","id_payment_shape":"1","tax":0,"purchase_total":2.5,"status":1}
+SQL: INSERT INTO income_products (
+                id_person, id_user, id_voucher_type, voucher_series, number_serial, 
+                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+            ) VALUES (
+                :id_person, :id_user, :id_voucher_type, :voucher_series, :number_serial,
+                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+            )
+EXECUTE RESULT: TRUE
+✅ ÚLTIMO ID INSERTADO: 40
+RESULTADO DE INSERT: insertedId=40
+✅ EXITOSO: Ingreso creado con ID 40
+CREATE DETAILS - Input: {"productos":[{"id_income_products":"40","id_product":"1","product_code":"ZG011AQA","product_expiration_date":null,"quantity":1,"full_purchase":1,"selling_price":1,"subtotal":1},{"id_income_products":"40","id_product":"2","product_code":"TH045AKH","product_expiration_date":null,"quantity":1,"full_purchase":1.5,"selling_price":1.5,"subtotal":1.5}]}
+INSERT COUNT: 2, ERRORS: []

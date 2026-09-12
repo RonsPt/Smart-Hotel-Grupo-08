@@ -1,0 +1,13 @@
+[28-Apr-2026 17:55:25 America/Lima] ID de habitación: 26
+[28-Apr-2026 17:55:25 America/Lima] Estado de habitación: Limpieza
+[28-Apr-2026 17:55:30 America/Lima] PHP Notice:  Undefined variable: json in /home/soluciones/public_html/demo/hotelero/application/controllers/C_Reception.php on line 316
+[28-Apr-2026 17:55:39 America/Lima] ID de habitación: 27
+[28-Apr-2026 17:55:39 America/Lima] Estado de habitación: Limpieza
+[28-Apr-2026 17:55:42 America/Lima] PHP Notice:  Undefined variable: json in /home/soluciones/public_html/demo/hotelero/application/controllers/C_Reception.php on line 316
+[28-Apr-2026 17:56:30 America/Lima] PHP Notice:  Undefined variable: json in /home/soluciones/public_html/demo/hotelero/application/controllers/C_Reception.php on line 316
+[09-May-2026 17:41:38 America/Lima] ID de habitación: 27
+[09-May-2026 17:41:38 America/Lima] Estado de habitación: Disponible
+[09-May-2026 17:41:40 America/Lima] ID de habitación: 28
+[09-May-2026 17:41:40 America/Lima] Estado de habitación: Disponible
+[09-May-2026 17:41:42 America/Lima] ID de habitación: 26
+[09-May-2026 17:41:42 America/Lima] Estado de habitación: Disponible
