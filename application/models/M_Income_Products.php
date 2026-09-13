@@ -16,7 +16,7 @@ class M_Income_Products extends Model {
             c.name,
             f.voucher_series AS series,
             f.number_serial,
-            f.expiration_date,
+             MIN(d.expiration_date) AS expiration_date,
             vt.description AS voucher_type_description,
             pt.description AS payment_type_description,
             pm.description AS payment_shape_description,
@@ -29,7 +29,7 @@ class M_Income_Products extends Model {
         LEFT JOIN payment_shape pm ON f.id_payment_shape = pm.id
         LEFT JOIN income_products_details d ON f.id = d.id_income_products
         GROUP BY 
-            f.id, c.name, f.voucher_series, f.number_serial, f.expiration_date,
+             f.id, c.name, f.voucher_series, f.number_serial,
             vt.description, pt.description, pm.description, f.status
         ORDER BY f.id DESC";
 
@@ -52,7 +52,7 @@ class M_Income_Products extends Model {
         try {
             $sql = "UPDATE income_products 
                     SET status = 3  
-                    WHERE expiration_date < NOW() 
+                     WHERE EXISTS (SELECT 1 FROM income_products_details d WHERE d.id_income_products = income_products.id AND d.expiration_date < CURRENT_DATE)
                     AND status = 1";  
     
             $stmt = $this->pdo->prepare($sql);
@@ -69,21 +69,20 @@ class M_Income_Products extends Model {
             $sql = 'SELECT 
                         f.id AS id_income_products, 
                         c.name, 
-                        f.sale_date, 
-                        f.series, 
+                         f.data_time AS sale_date,
+                         f.voucher_series AS series,
                         f.number_serial, 
-                        f.expiration_date, 
+                         (SELECT MIN(expiration_date) FROM income_products_details WHERE id_income_products = f.id) AS expiration_date,
                         vt.description AS voucher_type_description,
                         pt.description AS payment_type_description, 
                         pm.description AS payment_shape_description, 
-                        COALESCE(SUM(d.full_purchase), 0) AS total_purchase, 
+                         (SELECT COALESCE(SUM(full_purchase), 0) FROM income_products_details WHERE id_income_products = f.id) AS total_purchase,
                         f.status 
                     FROM income_products f 
                     INNER JOIN person c ON f.id_person = c.id 
                     INNER JOIN voucher_type vt ON f.id_voucher_type = vt.id 
                     INNER JOIN payment_type pt ON f.id_payment_type = pt.id 
                     INNER JOIN payment_shape pm ON f.id_payment_shape = pm.id 
-                    LEFT JOIN income_products_details d ON f.id = d.id_income_product 
                     WHERE f.id = :id';
 
             $result = $this->pdo->fetchOne($sql, $bind);
@@ -106,11 +105,11 @@ class M_Income_Products extends Model {
 
             // Estructura correcta de la tabla income_products
             $sql = "INSERT INTO income_products (
-                id_person, id_user, id_voucher_type, voucher_series, number_serial, 
-                expiration_date, id_payment_type, id_payment_shape, tax, purchase_total, status
+                 id_person, id_user, id_campus, id_voucher_type, voucher_series, number_serial,
+                 id_payment_type, id_payment_shape, tax, purchase_total, status
             ) VALUES (
-                :id_person, :id_user, :id_voucher_type, :voucher_series, :number_serial,
-                :expiration_date, :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
+                 :id_person, :id_user, :id_campus, :id_voucher_type, :voucher_series, :number_serial,
+                 :id_payment_type, :id_payment_shape, :tax, :purchase_total, :status
             )";
 
             file_put_contents("log.txt", "SQL: $sql\n", FILE_APPEND);
@@ -142,7 +141,7 @@ class M_Income_Products extends Model {
 
             $sql = "INSERT INTO income_products_details (
                         id_income_products, id_product, quantity, full_purchase, 
-                        product_expiration_date, selling_price
+                         expiration_date, selling_price
                     ) VALUES (
                         :id_income_products, :id_product, :quantity, :full_purchase,
                         :product_expiration_date, :selling_price
@@ -179,10 +178,10 @@ class M_Income_Products extends Model {
             $sql = 'SELECT 
                 f.id AS id_income_product,
                 c.name AS client_name,
-                f.sale_date,
-                f.series,
+                 f.data_time AS sale_date,
+                 f.voucher_series AS series,
                 f.number_serial,
-                f.expiration_date,
+                 d.expiration_date,
                 vt.description AS voucher_type_description,
                 pt.description AS payment_type_description,
                 pm.description AS payment_shape_description,
@@ -195,7 +194,7 @@ class M_Income_Products extends Model {
                 d.subtotal,
                 f.status
             FROM income_products f
-            INNER JOIN person c ON f.id_client = c.id  
+             INNER JOIN person c ON f.id_person = c.id
             INNER JOIN voucher_type vt ON f.id_voucher_type = vt.id  
             INNER JOIN payment_type pt ON f.id_payment_type = pt.id
             INNER JOIN payment_shape pm ON f.id_payment_shape = pm.id
@@ -286,11 +285,9 @@ class M_Income_Products extends Model {
     
             // Actualizar la compra principal
             $sql = "UPDATE income_products SET 
-                        id_client = :id_client,
-                        series = :series,
-                        sale_date = CURRENT_TIMESTAMP,
+                         id_person = :id_client,
+                         voucher_series = :series,
                         number_serial = :number_serial,
-                        expiration_date = :expiration_date,
                         id_voucher_type = :id_voucher_type,
                         id_payment_type = :id_payment_type,
                         id_payment_shape = :id_payment_shape
@@ -301,7 +298,6 @@ class M_Income_Products extends Model {
             $stmt->bindValue(':id_client', $data['id_client'], PDO::PARAM_INT);
             $stmt->bindValue(':series', $data['series'], PDO::PARAM_STR);
             $stmt->bindValue(':number_serial', $data['number_serial'], PDO::PARAM_STR);
-            $stmt->bindValue(':expiration_date', $data['expiration_date'], PDO::PARAM_STR);
             $stmt->bindValue(':id_voucher_type', $data['id_voucher_type'], PDO::PARAM_INT);
             $stmt->bindValue(':id_payment_type', $data['id_payment_type'], PDO::PARAM_INT);
             $stmt->bindValue(':id_payment_shape', $data['id_payment_shape'], PDO::PARAM_INT);

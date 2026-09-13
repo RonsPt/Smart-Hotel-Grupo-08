@@ -33,7 +33,7 @@ class M_Notifications extends Model
                         FROM reservation r
                         JOIN room ro ON ro.id_room = r.id_room
                         JOIN room_type rt ON rt.id_type = ro.id_type
-                        JOIN guest g ON g.id_guest = r.id_guest
+                         JOIN reservation_guest g ON g.id_reservation = r.id_reservation
                         WHERE r.status IN ("Reservado", "Ocupado");
                 ';
             // --
@@ -102,7 +102,7 @@ class M_Notifications extends Model
                         FROM notification n
                         INNER JOIN reservation r ON n.id_reservation = r.id_reservation
                         INNER JOIN room ro ON ro.id_room = r.id_room
-                        INNER JOIN guest g ON g.id_guest = r.id_guest
+                         INNER JOIN reservation_guest g ON g.id_reservation = r.id_reservation
                         ORDER BY n.date_notification DESC, n.time_notification DESC
                         LIMIT 10 OFFSET :continue;
                         ';

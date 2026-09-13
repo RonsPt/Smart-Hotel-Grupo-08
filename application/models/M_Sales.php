@@ -26,9 +26,9 @@ class M_Sales extends Model
               guest.company_name
         FROM reservation AS r
         JOIN room ON r.id_room = room.id_room
-        JOIN guest ON r.id_guest = guest.id_guest
+         JOIN reservation_guest guest ON guest.id_reservation = r.id_reservation
         JOIN room_type ON room.id_type = room_type.id_type
-        WHERE r.id_reservation = id_reservation;
+         ORDER BY r.id_reservation DESC;
         ';
 
       $result = $this->pdo->fetchAll($sql);

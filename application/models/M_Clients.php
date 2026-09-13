@@ -13,7 +13,7 @@ class M_Clients extends Model {
                         c.id AS id_clients,
                         c.id_document_type,
                         dt.description AS document_type,
-                        c.name,
+                         c.name, c.first_names, c.last_names,
                         c.document_number,
                         c.nationality,
                         c.birth_date,
@@ -45,7 +45,7 @@ class M_Clients extends Model {
                         c.id AS id_clients,
                         c.id_document_type,
                         dt.description AS document_type,
-                        c.name,
+                         c.name, c.first_names, c.last_names,
                         c.document_number,
                         c.nationality,
                         c.birth_date,
@@ -57,7 +57,7 @@ class M_Clients extends Model {
                         c.status
                     FROM person c
                     INNER JOIN document_type dt ON dt.id = c.id_document_type
-                    WHERE c.id = :id_clients AND c.status = 1';
+                     WHERE c.id = :id_clients';
 
             $result = $this->pdo->fetchOne($sql, $bind);
 
@@ -217,9 +217,7 @@ class M_Clients extends Model {
                     WHERE id = :id_clients';
     
             // Filtrar los valores opcionales que pueden ser null
-            $bind = array_filter($bind, function ($value) {
-                return $value !== null;
-            });
+             // Los valores nulos también deben vincularse a sus parámetros SQL.
     
             // Ejecutar la consulta
             $result = $this->pdo->perform($sql, $bind);
@@ -245,7 +243,7 @@ class M_Clients extends Model {
     {
     try {
         // Consulta SQL para eliminar un cliente
-        $sql = 'DELETE FROM person WHERE id = :id_clients'; // Usamos el campo 'id' como clave primaria en la tabla 'clients'
+         $sql = 'UPDATE person SET status = 0 WHERE id = :id_clients';
         
         // Ejecutamos la consulta con los parámetros vinculados
         $result = $this->pdo->perform($sql, $bind);
