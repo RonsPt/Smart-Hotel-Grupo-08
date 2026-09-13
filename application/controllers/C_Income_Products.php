@@ -224,8 +224,7 @@ class C_Income_Products extends Controller {
             file_put_contents("log.txt", "INPUT RECIBIDO: " . json_encode($input, JSON_PRETTY_PRINT) . "\n", FILE_APPEND);
 
             if (!empty($input['id_client']) && !empty($input['id_voucher_type']) && !empty($input['id_payment_type'])
-                && !empty($input['id_payment_shape']) && !empty($input['series']) && !empty($input['number_serial'])
-                && !empty($input['expiration_date'])) {
+                 && !empty($input['id_payment_shape']) && !empty($input['series']) && !empty($input['number_serial'])) {
 
                 // Limpiar y validar los datos
                 $id_person = $this->functions->clean_string($input['id_client']);           // Cliente
@@ -234,16 +233,22 @@ class C_Income_Products extends Controller {
                 $id_payment_shape = $this->functions->clean_string($input['id_payment_shape']);
                 $voucher_series = $this->functions->clean_string($input['series']);        // Nota: se llama 'series' en el formulario pero es 'voucher_series' en BD
                 $number_serial = $this->functions->clean_string($input['number_serial']);
-                $expiration_date = $this->functions->clean_string($input['expiration_date']);
+                 $expiration_date = $this->functions->clean_string($input['expiration_date'] ?? '');
                 
                 // Obtener el ID del usuario desde sesión
-                $id_user = $this->segment->get('userID') ?? 1;
+                 $user = $this->segment->get('data');
+                 $id_user = $user['id_user'] ?? null;
+                 $id_campus = $this->segment->get('isLocation');
+                 if (!$id_user || !$id_campus) {
+                     echo json_encode(['status' => 'ERROR', 'msg' => 'Seleccione una sede e inicie sesión nuevamente.']);
+                     return;
+                 }
 
                 file_put_contents("log.txt", "DATOS LIMPIOS: id_person=$id_person, id_user=$id_user, id_voucher_type=$id_voucher_type\n", FILE_APPEND);
                 file_put_contents("log.txt", "voucher_series=$voucher_series, number_serial=$number_serial, expiration_date=$expiration_date\n", FILE_APPEND);
 
                 // Validar formato de fecha
-                if (!strtotime($expiration_date)) {
+                 if ($expiration_date !== '' && !strtotime($expiration_date)) {
                     file_put_contents("log.txt", "ERROR: Fecha inválida: $expiration_date\n", FILE_APPEND);
                     echo json_encode(['status' => 'ERROR', 'msg' => 'Fecha de expiración no válida.']);
                     return;
@@ -252,11 +257,11 @@ class C_Income_Products extends Controller {
                 // Preparar los datos para la inserción
                 $bind = array(
                     'id_person' => $id_person,
-                    'id_user' => $id_user,
+                     'id_user' => $id_user,
+                     'id_campus' => $id_campus,
                     'id_voucher_type' => $id_voucher_type,
                     'voucher_series' => $voucher_series,
                     'number_serial' => $number_serial,
-                    'expiration_date' => $expiration_date,
                     'id_payment_type' => $id_payment_type,
                     'id_payment_shape' => $id_payment_shape,
                     'tax' => 0,                           // Impuesto inicial
