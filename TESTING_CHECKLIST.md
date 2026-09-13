@@ -3,19 +3,19 @@
 ## 📋 Pruebas Funcionales
 
 ### 1. Gestión de Personas (Clientes)
-- [ ] Cargar lista de personas
+- [X] Cargar lista de personas
   - URL: `/Clients/` o módulo equivalente
   - Verificar que carga sin errores
   
-- [ ] Crear nueva persona
+- [X] Crear nueva persona
   - Llenar formulario con datos válidos
   - Enviar y verificar que se guarda en tabla `person`
   
-- [ ] Editar persona existente
+- [X] Editar persona existente
   - Cambiar datos de una persona
   - Guardar y verificar cambios en BD
   
-- [ ] Eliminar persona
+- [X] Eliminar persona
   - Eliminar una persona
   - Verificar que se elimina de tabla `person`
 
