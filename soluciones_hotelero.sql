@@ -296,6 +296,45 @@ INSERT INTO `company` (`id`, `business_name`, `company_name`, `ruc`, `address`, 
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `company_corporate`
+--
+
+CREATE TABLE `company_corporate` (
+  `id` int(11) NOT NULL,
+  `company_name` varchar(150) NOT NULL,
+  `ruc` char(11) NOT NULL,
+  `business_name` varchar(150) NOT NULL DEFAULT '',
+  `contact_name` varchar(100) NOT NULL DEFAULT '',
+  `contact_email` varchar(50) NOT NULL DEFAULT '',
+  `contact_phone` varchar(45) NOT NULL DEFAULT '',
+  `commercial_conditions` text DEFAULT NULL,
+  `corporate_tariff` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `credit_limit` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `status` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+--
+-- Volcado de datos para la tabla `company_corporate`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `company_guest`
+--
+
+CREATE TABLE `company_guest` (
+  `id_company` int(11) NOT NULL,
+  `id_person` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+--
+-- Volcado de datos para la tabla `company_guest`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `content_headers`
 --
 
@@ -1194,7 +1233,9 @@ INSERT INTO `permission` (`id`, `id_role`, `id_sub_menu`, `status`) VALUES
 (71, 5, 28, 1),
 (72, 5, 29, 1),
 (73, 5, 30, 1),
-(74, 5, 26, 1);
+(74, 5, 26, 1),
+(44, 1, 40, 1),
+(45, 5, 40, 1);
 
 -- --------------------------------------------------------
 
@@ -1813,7 +1854,8 @@ INSERT INTO `sub_menu` (`id`, `id_menu`, `description`, `icon`, `url`, `order`) 
 (33, 2, 'Proveedores', 'circle', 'Suppliers', 3),
 (35, 4, 'Nota Crédito', 'circle', '', 4),
 (37, 5, 'Kardex producto', 'circle', '', 6),
-(39, 8, 'Piso', 'circle', 'Flats', 3);
+(39, 8, 'Piso', 'circle', 'Flats', 3),
+(40, 8, 'Empresas', 'circle', 'Companies', 6);
 
 -- --------------------------------------------------------
 
@@ -2072,6 +2114,20 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `coin`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `company_corporate`
+--
+ALTER TABLE `company_corporate`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ruc_UNIQUE` (`ruc`);
+
+--
+-- Indices de la tabla `company_guest`
+--
+ALTER TABLE `company_guest`
+  ADD PRIMARY KEY (`id_company`,`id_person`),
+  ADD KEY `FK_COMPANY_GUEST_PERSON` (`id_person`);
 
 --
 -- Indices de la tabla `content_headers`
@@ -2544,6 +2600,12 @@ ALTER TABLE `coin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `company_corporate`
+--
+ALTER TABLE `company_corporate`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
 -- AUTO_INCREMENT de la tabla `content_headers`
 --
 ALTER TABLE `content_headers`
@@ -2793,7 +2855,7 @@ ALTER TABLE `sales_product`
 -- AUTO_INCREMENT de la tabla `sub_menu`
 --
 ALTER TABLE `sub_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `sunat`
@@ -2840,6 +2902,13 @@ ALTER TABLE `user_campus`
 --
 ALTER TABLE `carrier`
   ADD CONSTRAINT `FK_CARRIER_DOCUMENT_TYPE` FOREIGN KEY (`id_document_type`) REFERENCES `document_type` (`id`);
+
+--
+-- Filtros para la tabla `company_guest`
+--
+ALTER TABLE `company_guest`
+  ADD CONSTRAINT `FK_COMPANY_GUEST_COMPANY` FOREIGN KEY (`id_company`) REFERENCES `company_corporate` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_COMPANY_GUEST_PERSON` FOREIGN KEY (`id_person`) REFERENCES `person` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
