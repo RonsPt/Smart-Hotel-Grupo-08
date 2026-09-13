@@ -161,7 +161,7 @@ async function upload_calendar() {
                         $('.detalle-apellidos').text(capitalizeName(element.last_names));
                         $('.detalle-razonSc').text(capitalizeName(element.company_name));
 
-                        if (element.last_sname.length > 1 && element.first_names.length > 1) {
+                         if (element.document_type !== 'RUC') {
                             // Ocultar el RUC y dejar el DNI visible
                             $('.huesped-ruc').hide().css('position', 'absolute');
                             $('.huesped-dni').show();

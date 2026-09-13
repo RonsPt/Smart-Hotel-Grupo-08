@@ -34,9 +34,9 @@ class M_Reservation extends Model
               FROM reservation r
               JOIN room ro ON ro.id_room = r.id_room
               JOIN room_type rt ON rt.id_type = ro.id_type
-              JOIN guest g ON g.id_guest = r.id_guest
+               JOIN reservation_guest g ON g.id_reservation = r.id_reservation
               JOIN payment p ON r.id_reservation = p.id_reservation
-              WHERE r.status IN ("Reservado", "Finalizado", "Ocupado", "Libre");
+               WHERE r.status IN ("Reservado", "Finalizado", "Ocupado", "Libre", "Pendiente");
               ';
       // --
       $result = $this->pdo->fetchAll($sql);
@@ -72,7 +72,8 @@ class M_Reservation extends Model
                     r.checkout_date,
                     r.checkout_time,
                     r.id_room,
-                    r.id_guest,
+                     r.id_person AS id_guest,
+                     r.id_person,
                     r.status,
                     r.departure_date,
                     r.departure_time,
@@ -94,7 +95,7 @@ class M_Reservation extends Model
                 JOIN reservation r ON p.id_reservation = r.id_reservation
                 JOIN room ro ON ro.id_room = r.id_room
                 JOIN room_type rt ON rt.id_type = ro.id_type
-                JOIN guest g ON g.id_guest = r.id_guest
+                 JOIN reservation_guest g ON g.id_reservation = r.id_reservation
                 WHERE p.id_reservation = :id_reservation;
                 ';
       // --
