@@ -259,223 +259,30 @@ class C_Clients extends Controller {
     header('Content-Type: application/json');
     echo json_encode($json);
 }
-  public function create_clients() {
-    // Se valida si la sesión está activa
-    $this->functions->validate_session($this->segment->get('isActive'));
-    
-    // Verifica el método de la solicitud (debe ser POST para crear un cliente)
-    $request = $_SERVER['REQUEST_METHOD'];
-    
-    if ($request === 'POST') {
-        // Obtiene los datos del cuerpo de la solicitud (puede ser JSON o POST)
-        $input = json_decode(file_get_contents('php://input'), true);
-        if (empty($input)) {
-            // Si no se recibe un JSON, se obtiene como datos de un formulario POST
-            $input = filter_input_array(INPUT_POST);
-        }
-        
-        // Verifica que todos los campos obligatorios estén presentes en los datos recibidos
-        if (!empty($input['document_type']) &&
-            !empty($input['name']) &&
-            !empty($input['document_number']) &&
-            !empty($input['nationality'])) {
+  public function create_clients() { $this->save_person(false); }
+  public function update_clients() { $this->save_person(true); }
 
-            // Limpieza y validación de los datos obligatorios
-            $document_type = $this->functions->clean_string($input['document_type']);
-            $name = $this->functions->clean_string(strtoupper(ucfirst($input['name']))); // Se convierte el nombre a formato adecuado
-            $document_number = $this->functions->clean_string($input['document_number']);
-            $nationality = $this->functions->clean_string($input['nationality']);
-
-            // Limpieza y asignación de valores para los campos opcionales (permitiendo nulos)
-            $birth_date = !empty($input['birth_date']) ? $this->functions->clean_string($input['birth_date']) : null;
-            $email = !empty($input['email']) ? $this->functions->clean_string($input['email']) : null;
-            $phone = !empty($input['phone']) ? $this->functions->clean_string($input['phone']) : null;
-            $address = !empty($input['address']) ? $this->functions->clean_string($input['address']) : null;
-            $business_name = !empty($input['business_name']) ? $this->functions->clean_string($input['business_name']) : null;
-
-            // Prepara los datos para la inserción
-            $bind = array(
-                'id_document_type' => $document_type,
-                'name' => $name,
-                'document_number' => $document_number,
-                'nationality' => $nationality,
-                'birth_date' => $birth_date,
-                'email' => $email,
-                'phone' => $phone,
-                'address' => $address,
-                'business_name' => $business_name
-            );
-
-            // Se carga el modelo para manejar la creación del cliente
-            $obj = $this->load_model('Clients');
-            $response = $obj->create_clients($bind); // Inserción en la base de datos
-
-            // Manejo de la respuesta según el resultado
-            switch ($response['status']) {
-                case 'OK':
-                    $json = array(
-                        'status' => 'OK',
-                        'type' => 'success',
-                        'msg' => 'Registro almacenado en el sistema con éxito.',
-                        'data' => array()
-                    );
-                    break;
-
-                case 'ERROR':
-                    $json = array(
-                        'status' => 'ERROR',
-                        'type' => 'warning',
-                        'msg' => 'No fue posible guardar el registro ingresado, verificar.',
-                        'data' => array(),
-                    );
-                    break;
-
-                case 'EXCEPTION':
-                    $json = array(
-                        'status' => 'ERROR',
-                        'type' => 'error',
-                        'msg' => $response['result']->getMessage(),
-                        'data' => array()
-                    );
-                    break;
-            }
-        } else {
-            // Si faltan campos obligatorios, se retorna un mensaje de advertencia
-            $json = array(
-                'status' => 'ERROR',
-                'type' => 'warning',
-                'msg' => 'No se enviaron los campos obligatorios, verificar.',
-                'data' => array()
-            );
-        }
-    } else {
-        // Si el método de la solicitud no es POST, se retorna un mensaje de error
-        $json = array(
-            'status' => 'ERROR',
-            'type' => 'error',
-            'msg' => 'Método no permitido.',
-            'data' => array()
-        );
-    }
-
-    // Se establece que la respuesta será en formato JSON
-    header('Content-Type: application/json');
-    // Se imprime la respuesta en formato JSON
-    echo json_encode($json);
+  private function save_person($update)
+  {
+      $this->functions->validate_session($this->segment->get('isActive'));
+      header('Content-Type: application/json; charset=utf-8');
+      try {
+          if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+              throw new InvalidArgumentException('Método no permitido.');
+          }
+          $input = json_decode(file_get_contents('php://input'), true) ?: $_POST;
+          if ($update && (!ctype_digit((string) ($input['id_clients'] ?? '')) || (int) $input['id_clients'] < 1)) {
+              throw new InvalidArgumentException('Seleccione una persona válida.');
+          }
+          $json = $this->load_model('Person')->save($input, $update ? $input['id_clients'] : null);
+          $json['type'] = $json['status'] === 'OK' ? 'success' : 'warning';
+      } catch (Throwable $e) {
+          if (!($e instanceof InvalidArgumentException)) { error_log('Clients: ' . $e->getMessage()); }
+          $json = ['status' => 'ERROR', 'type' => 'warning', 'data' => [],
+              'msg' => $e instanceof InvalidArgumentException ? $e->getMessage() : 'No se pudo guardar la ficha. Verifique la conexión y los documentos duplicados.'];
+      }
+      echo json_encode($json, JSON_UNESCAPED_UNICODE);
   }
-
-  // --
-  public function update_clients() {
-    $this->functions->validate_session($this->segment->get('isActive'));
-    $request = $_SERVER['REQUEST_METHOD'];
-    
-    if ($request === 'POST') {
-        $input = json_decode(file_get_contents('php://input'), true);
-        if (empty($input)) {
-            $input = filter_input_array(INPUT_POST);
-        }
-
-        // Verificar campos obligatorios
-        if (!empty($input['id_clients']) && 
-            !empty($input['document_type']) && 
-            !empty($input['name']) &&
-            !empty($input['document_number']) &&
-            !empty($input['nationality']) &&
-            !empty($input['description_document_type']) 
-        ) {
-            // Limpieza de valores obligatorios
-            $id_clients = $this->functions->clean_string($input['id_clients']);
-            $document_type = $this->functions->clean_string($input['document_type']);
-            $name = $this->functions->clean_string(strtoupper(ucfirst($input['name'])));
-            $document_number = $this->functions->clean_string($input['document_number']);
-            $description_document_type = $this->functions->clean_string($input['description_document_type']);
-            $nationality = $this->functions->clean_string($input['nationality']);
-
-            // Limpieza de valores opcionales (pueden ser null)
-            $business_name = isset($input['business_name']) ? $this->functions->clean_string($input['business_name']) : null;
-            $birth_date = isset($input['birth_date']) ? $this->functions->clean_string($input['birth_date']) : null;
-            $birth_place = isset($input['birth_place']) ? $this->functions->clean_string($input['birth_place']) : null;
-            $address = isset($input['address']) ? $this->functions->clean_string($input['address']) : null;
-            $phone = isset($input['phone']) ? $this->functions->clean_string($input['phone']) : null;
-            $email = isset($input['email']) ? $this->functions->clean_string($input['email']) : null;
-
-            // Verificación de tipo de documento
-            $is_verified = $this->functions->verified_document_type($description_document_type, $document_number);
-
-            if ($is_verified) {
-                // Preparar datos para la actualización
-                $bind = array(
-                    'id_clients' => $id_clients,
-                    'id_document_type' => $document_type,
-                    'name' => $name,
-                    'document_number' => $document_number,
-                    'nationality' => $nationality,
-                    'birth_date' => $birth_date,
-                    'birth_place' => $birth_place,
-                    'address' => $address,
-                    'phone' => $phone,
-                    'business_name' => $business_name, // Puede ser null
-                    'email' => $email
-                );
-
-                $obj = $this->load_model('Clients');
-                $response = $obj->update_clients($bind);
-
-                switch ($response['status']) {
-                    case 'OK':
-                        $json = array(
-                            'status' => 'OK',
-                            'type' => 'success',
-                            'msg' => 'Registro actualizado en el sistema con éxito.',
-                            'data' => array()
-                        );
-                        break;
-
-                    case 'ERROR':
-                        $json = array(
-                            'status' => 'ERROR',
-                            'type' => 'warning',
-                            'msg' => 'No fue posible actualizar el registro, verificar.',
-                            'data' => array(),
-                        );
-                        break;
-
-                    case 'EXCEPTION':
-                        $json = array(
-                            'status' => 'ERROR',
-                            'type' => 'error',
-                            'msg' => $response['result']->getMessage(),
-                            'data' => array()
-                        );
-                        break;
-                }
-            } else {
-                $json = array(
-                    'status' => 'ERROR',
-                    'type' => 'warning',
-                    'msg' => 'Número de documento inválido, verificar.',
-                );
-            }
-        } else {
-            $json = array(
-                'status' => 'ERROR',
-                'type' => 'warning',
-                'msg' => 'No se enviaron los campos obligatorios, verificar.',
-                'data' => array()
-            );
-        }
-    } else {
-        $json = array(
-            'status' => 'ERROR',
-            'type' => 'error',
-            'msg' => 'Método no permitido.',
-            'data' => array()
-        );
-    }
-
-    header('Content-Type: application/json');
-    echo json_encode($json);
-    }
   // -- Eliminar cliente
     public function delete_clients(): void {
     $this->functions->validate_session($this->segment->get('isActive')); // Verificar la sesión activa
@@ -737,7 +544,9 @@ class C_Clients extends Controller {
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => $url,  // URL de la API que consulta los datos
                     CURLOPT_RETURNTRANSFER => true,  // Retornar la respuesta como string
-                    CURLOPT_SSL_VERIFYPEER => 0,  // Desactivar la verificación de SSL (opcional)
+                     CURLOPT_SSL_VERIFYPEER => true,
+                     CURLOPT_CONNECTTIMEOUT => 5,
+                     CURLOPT_TIMEOUT => 15,
                     CURLOPT_CUSTOMREQUEST => 'GET',  // Método de la solicitud HTTP (GET)
                     CURLOPT_HTTPHEADER => array(
                         'Referer: https://apis.net.pe',  // Referencia de la solicitud

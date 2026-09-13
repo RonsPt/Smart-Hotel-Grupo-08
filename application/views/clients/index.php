@@ -88,7 +88,7 @@
                                     <div class="col-12">
                                         <label class="form-label">Nº de Documento <span class="text-danger">*</span></label>
                                         <div class="input-group">
-                                            <input type="number" id="document_number" name="document_number" class="form-control" placeholder="Nº de Documento" required />
+                                             <input type="text" id="document_number" name="document_number" maxlength="12" class="form-control" placeholder="Nº de Documento" required />
                                             <button type="button" class="btn btn-primary btn_get_company_data">
                                                 <i class="bi bi-search"></i> <!-- Ícono de búsqueda -->
                                             </button>
@@ -97,13 +97,15 @@
 
                                     <!-- Nombre -->
                                     <div class="col-12">
-                                        <label class="form-label">Nombre <span class="text-danger">*</span></label>
-                                        <input type="text" id="name" name="name" class="form-control" placeholder="Nombre" required />
-                                    </div>
+                                         <label class="form-label">Nombre completo / razón social</label>
+                                         <input type="text" id="name" name="name" class="form-control" readonly />
+                                     </div>
+                                     <div class="col-12 client-natural"><label class="form-label">Nombres *</label><input name="first_names" class="form-control" maxlength="50" required></div>
+                                     <div class="col-12 client-natural"><label class="form-label">Apellidos *</label><input name="last_names" class="form-control" maxlength="50" required></div>
 
                                     <!-- Nacionalidad -->
-                                    <div class="col-12">
-                                        <label class="form-label">Nacionalidad <span class="text-danger">*</span></label>
+                                     <div class="col-12 client-natural">
+                                         <label class="form-label">Nacionalidad <span class="text-danger">*</span></label>
                                         <input type="text" id="nationality" name="nationality" class="form-control" placeholder="Nacionalidad" required />
                                     </div>
 
@@ -147,11 +149,12 @@
                                     <div class="col-12">
                                         <div>
                                             <label class="form-label">Razón Social</label>
-                                            <input type="text" name="business_name" class="form-control" placeholder="Razón Social" />
+                                             <input type="text" name="business_name" maxlength="50" class="form-control" placeholder="Razón Social" />
                                         </div>
                                     </div>
 
-                                    <!-- Referencia -->
+                                     <div class="col-12"><small>Complete al menos un teléfono o correo de contacto.</small></div>
+                                     <!-- Referencia -->
                                     <div class="col-12">
                                         <div>
                                             <label class="form-label">Referencia</label>
@@ -188,7 +191,7 @@
                                     <div class="text-center mb-2">
                                         <h1 class="mb-1">Actualizar Persona</h1>
                                     </div>
-                                    <form method="POST" enctype="multipart/form-data" id="update_clients_form" class="row" onsubmit="update_clients(this); return false;">
+                                     <form method="POST" enctype="multipart/form-data" id="update_clients_form" class="row" onsubmit="return false;">
                                         <div class="col-12">
                                             <label class="form-label">Tipo de documento <span class="text-danger">*</span></label>
                                             <select name="document_type" class="form-select select2" data-msg="Seleccione un tipo de documento" required>
@@ -197,13 +200,15 @@
                                         </div>
                                         <div class="col-12">
                                             <label class="form-label">Nº de Documento <span class="text-danger">*</span></label>
-                                            <input type="number" name="document_number" class="form-control" placeholder="Nº de Documento" data-msg="Este campo es obligatorio" required />
+                                             <input type="text" name="document_number" maxlength="12" class="form-control" placeholder="Nº de Documento" data-msg="Este campo es obligatorio" required />
                                         </div>
                                         <div class="col-12">
-                                            <label class="form-label">Nombre <span class="text-danger">*</span></label>
-                                            <input type="text" name="name" class="form-control" placeholder="Nombre" data-msg="Este campo es obligatorio" required />
-                                        </div>
-                                        <div class="col-12">
+                                             <label class="form-label">Nombre completo actual</label>
+                                             <input type="text" name="name" class="form-control" readonly />
+                                         </div>
+                                         <div class="col-12 client-natural"><label class="form-label">Nombres</label><input name="first_names" class="form-control" maxlength="50"></div>
+                                         <div class="col-12 client-natural"><label class="form-label">Apellidos</label><input name="last_names" class="form-control" maxlength="50"><small>Para fichas antiguas, complete ambos campos cuando confirme la separación del nombre.</small></div>
+                                         <div class="col-12 client-natural">
                                             <label class="form-label">Nacionalidad <span class="text-danger">*</span></label>
                                             <input type="text" name="nationality" class="form-control" placeholder="Nacionalidad" data-msg="Este campo es obligatorio" required />
                                         </div>
@@ -235,7 +240,8 @@
                                             <label class="form-label">Referencia</label>
                                             <textarea name="reference" class="form-control" cols="2" rows="2" style="max-height: 68px;" placeholder="Referencia"></textarea>
                                         </div>
-                                        <input type="hidden" name="id_clients">
+                                         <div class="col-12"><label class="form-label">Estado</label><select name="status" class="form-select"><option value="1">Activo</option><option value="0">Inactivo</option></select></div>
+                                         <input type="hidden" name="id_clients">
                                         <div class="col-12 text-center mt-2 pt-50">
                                             <button id="btn_update_clients" type="submit" class="btn btn-primary me-1">Guardar</button>
                                             <button type="reset" class="btn btn-outline-secondary reset" data-bs-dismiss="modal">Cancelar</button>

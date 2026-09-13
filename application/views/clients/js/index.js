@@ -65,11 +65,11 @@ function load_datatable() {
 
         if (id_client) {
             Swal.fire({
-                title: '¿Estás seguro de eliminar este cliente?',
-                text: "¡Esta acción no se puede deshacer!",
+                 title: '¿Desactivar esta persona?',
+                 text: 'Su historial se conservará. Puede reactivarla desde Editar.',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Sí, eliminar',
+                 confirmButtonText: 'Sí, desactivar',
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -81,7 +81,7 @@ function load_datatable() {
                         success: function (response) {
                             console.log("Respuesta del servidor:", response); // Log de la respuesta
                             if (response.status === 'OK') {
-                                Swal.fire('¡Eliminado!', 'El cliente ha sido eliminado exitosamente.', 'success');
+                                 Swal.fire('Desactivado', 'La ficha se desactivó conservando su historial.', 'success');
                                 dataTable.ajax.reload();  // Recarga la tabla
                             } else {
                                 Swal.fire('Error', 'Hubo un error al eliminar el cliente.', 'error');
@@ -183,15 +183,15 @@ $(document).on("click", ".btn_get_company_data", function () {
                         let data = response.data;
 
                         if (documentType == 1) {
-                            $("#create_clients_modal :input[name=name]")
-                                .val(`${data.nombres} ${data.apellidoPaterno} ${data.apellidoMaterno}`);
+                             $("#create_clients_modal :input[name=first_names]").val(data.nombres || '');
+                             $("#create_clients_modal :input[name=last_names]").val([data.apellidoPaterno, data.apellidoMaterno].filter(Boolean).join(' ')).trigger('input');
 
                             $("#create_clients_modal :input[name=address]")
                                 .val(data.direccion_completa || "");
 
                         } else if (documentType == 2) {
 
-                            $("#create_clients_modal :input[name=name]").val(data.razonSocial);
+                             $("#create_clients_modal :input[name=business_name]").val(data.razonSocial).trigger('input');
                             $("#create_clients_modal :input[name=address]").val(data.direccion);
                         }
 
@@ -245,11 +245,13 @@ function create_clients(form) {
             } else {
                 $('#btn_create_clients').prop('disabled', false); // Habilita el botón si hubo un error
             }
-        }
-    });
-}
-
-// Función para actualizar un cliente existente
+         },
+         error: function () { functions.toast_message('error', 'No se pudo guardar. Vuelva a intentar.', 'Error'); },
+         complete: function () { $('#btn_create_clients').prop('disabled', false); }
+     });
+ }
+ 
+ // Función para actualizar un cliente existente
 function update_clients(form) {
     $('#btn_update_clients').prop('disabled', true); // Deshabilita el botón mientras se procesa
     let params = new FormData(form); // Captura los datos del formulario
@@ -310,7 +312,10 @@ $(document).on('click', '.btn_update', function () {
             if (data.status === 'OK') { // Si fue exitoso
                 let item = data.data;
                 $('#update_clients_form :input[name=id_clients]').val(item.id_clients); // Rellena los campos con los datos obtenidos
-                $('#update_clients_form :input[name=name]').val(item.name);
+                 $('#update_clients_form :input[name=name]').val(item.name);
+                 $('#update_clients_form :input[name=first_names]').val(item.first_names || '');
+                 $('#update_clients_form :input[name=last_names]').val(item.last_names || '');
+                 $('#update_clients_form :input[name=status]').val(String(item.status));
                 $('#update_clients_form :input[name=document_number]').val(item.document_number);
                 $('#update_clients_form :input[name=nationality]').val(item.nationality);
                 $('#update_clients_form :input[name=birth_date]').val(item.birth_date);
@@ -465,6 +470,18 @@ $('.modal').on('hidden.bs.modal', function () {
     $('#btn_update_clients').prop('disabled', false); // Habilita el botón de actualización
 });
 
-// Inicialización de la tabla y obtención de tipos de documentos al cargar la página
+ $(document).on('change', '#create_clients_form [name=document_type], #update_clients_form [name=document_type]', function () {
+     const form = $(this).closest('form');
+     const business = $(this).find('option:selected').text() === 'RUC';
+     form.find('.client-natural').toggle(!business).find('input').prop('disabled', business);
+     form.find('[name=business_name]').prop('required', business);
+ });
+ $(document).on('input', '#create_clients_form [name=first_names], #create_clients_form [name=last_names], #create_clients_form [name=business_name], #update_clients_form [name=first_names], #update_clients_form [name=last_names], #update_clients_form [name=business_name]', function () {
+     const form = $(this).closest('form');
+     const business = form.find('[name=document_type] option:selected').text() === 'RUC';
+     const full = business ? form.find('[name=business_name]').val() : [form.find('[name=first_names]').val(), form.find('[name=last_names]').val()].filter(Boolean).join(' ');
+     if (full) { form.find('[name=name]').val(full); }
+ });
+ // Inicialización de la tabla y obtención de tipos de documentos al cargar la página
 get_document_types(); // Carga los tipos de documentos
 load_datatable(); // Carga la tabla de datos
