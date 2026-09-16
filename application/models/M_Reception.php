@@ -39,6 +39,30 @@ class M_Reception extends Model
         return (new M_Person($this->pdo))->save($input);
     }
 
+    /** 8.2 paso 1 — Consultar ficha. */
+    public function get_person_profile($bind)
+    {
+        try {
+            $person = (new M_Person($this->pdo))->byId($bind['id_person']);
+            if (!$person) {
+                throw new InvalidArgumentException('No se encontró la ficha del huésped.');
+            }
+            return ['status' => 'OK', 'result' => $person];
+        } catch (Throwable $e) {
+            return ['status' => 'EXCEPTION', 'result' => $e];
+        }
+    }
+
+    /** 8.2 paso 2 — Recuperar reservas y estadías anteriores. */
+    public function get_person_stays($bind)
+    {
+        try {
+            return ['status' => 'OK', 'result' => (new M_Person($this->pdo))->stays($bind['id_person'])];
+        } catch (Throwable $e) {
+            return ['status' => 'EXCEPTION', 'result' => $e];
+        }
+    }
+
     private function dateTime($date, $time)
     {
         $value = $date . ' ' . $time;
