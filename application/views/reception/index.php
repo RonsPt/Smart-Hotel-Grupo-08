@@ -33,6 +33,7 @@
                     <select id="id_guest" name="id_person" class="form-select" required><option value="">Busque una persona</option></select>
                     <p id="person_summary" class="mt-1 mb-1" aria-live="polite"></p>
                     <button id="btn_new_guest" type="button" class="btn btn-outline-primary d-none">3. Registrar nueva persona</button>
+                    <button id="btn_view_history" type="button" class="btn btn-outline-secondary d-none">Ver ficha e historial</button>
                 </div>
                 <div class="col-md-6"><label for="fechaInicio" class="form-label">Fecha de ingreso</label><input id="fechaInicio" name="checkin_date" type="date" class="form-control" required></div>
                 <div class="col-md-6"><label for="horaInicio" class="form-label">Hora de ingreso</label><input id="horaInicio" name="checkin_time" type="time" class="form-control" required></div>
@@ -63,6 +64,8 @@
             <div class="col-md-6 natural-person"><label for="nombre" class="form-label">Nombres *</label><input id="nombre" name="first_names" class="form-control" maxlength="50" required></div>
             <div class="col-md-6 natural-person"><label for="apellido" class="form-label">Apellidos *</label><input id="apellido" name="last_names" class="form-control" maxlength="50" required></div>
             <div class="col-md-6 natural-person"><label for="nacionalidad" class="form-label">Nacionalidad *</label><input id="nacionalidad" name="nationality" class="form-control" maxlength="50" required></div>
+            <div class="col-md-6 natural-person"><label for="fecha_nacimiento" class="form-label">5. Fecha de nacimiento</label><input id="fecha_nacimiento" name="birth_date" type="date" class="form-control"></div>
+            <div class="col-md-6 natural-person"><label for="lugar_nacimiento" class="form-label">Lugar de nacimiento</label><input id="lugar_nacimiento" name="birth_place" class="form-control" maxlength="100"></div>
             <div class="col-12 business-person d-none"><label for="razon_social" class="form-label">Razón social *</label><input id="razon_social" name="company_name" class="form-control" maxlength="50"></div>
             <div class="col-md-6"><label for="guest_phone" class="form-label">Teléfono</label><input id="guest_phone" name="phone" type="tel" class="form-control" maxlength="45"></div>
             <div class="col-md-6"><label for="guest_email" class="form-label">Correo electrónico</label><input id="guest_email" name="email" type="email" class="form-control" maxlength="50"></div>
@@ -71,6 +74,23 @@
             <div class="col-12 mt-2"><button id="btn_create_guest_reservation" class="btn btn-primary" type="submit">3. Guardar y seleccionar</button>
                 <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancelar</button></div>
         </form></div>
+    </div></div>
+</div>
+
+<div class="modal fade" id="history_modal" tabindex="-1" aria-labelledby="history_title">
+    <div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content">
+        <div class="modal-header"><h3 id="history_title">Ficha e historial del huésped</h3><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button></div>
+        <div class="modal-body">
+            <div id="history_profile"><p class="text-muted">Cargando ficha…</p></div>
+            <hr>
+            <h5>Estadías anteriores</h5>
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead><tr><th>Ingreso</th><th>Salida</th><th>Habitación</th><th>Tipo</th><th>Estado</th></tr></thead>
+                    <tbody id="history_stays"><tr><td colspan="5" class="text-muted">Cargando…</td></tr></tbody>
+                </table>
+            </div>
+        </div>
     </div></div>
 </div>
 
