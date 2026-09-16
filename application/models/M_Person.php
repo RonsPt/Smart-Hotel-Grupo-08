@@ -1,5 +1,4 @@
 <?php
-
 /** Identidad compartida por Recepción y Clientes. */
 class M_Person extends Model
 {
@@ -47,6 +46,24 @@ class M_Person extends Model
         return $this->pdo->fetchOne('SELECT p.*, p.id AS id_guest, p.id AS id_clients,
             dt.description AS document_type, p.business_name AS company_name
             FROM person p JOIN document_type dt ON dt.id = p.id_document_type WHERE p.id = :id', ['id' => $id]);
+    }
+
+    /** 8.2 — Recupera las reservas y estadías anteriores de una ficha (persona). */
+    public function stays($id)
+    {
+        if (!ctype_digit((string) $id)) {
+            throw new InvalidArgumentException('Identificador de persona inválido.');
+        }
+        return $this->pdo->fetchAll(
+            'SELECT r.id_reservation, r.checkin_date, r.checkin_time, r.checkout_date, r.checkout_time,
+                r.status, room.room_number, room_type.type_name
+             FROM reservation r
+             JOIN room ON room.id_room = r.id_room
+             JOIN room_type ON room_type.id_type = room.id_type
+             WHERE r.id_person = :id
+             ORDER BY r.checkin_date DESC, r.checkin_time DESC',
+            ['id' => (int) $id]
+        );
     }
 
     public function save($input, $id = null)
