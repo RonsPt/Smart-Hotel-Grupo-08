@@ -57,6 +57,8 @@ class C_Reception extends Controller
     public function get_room_by_id() { $this->callModel('GET', 'get_room_by_id', ['id_room']); }
     public function get_rooms_price() { $this->callModel('GET', 'get_rooms_price', ['type_name']); }
     public function get_guest() { $this->callModel('GET', 'get_guest', ['document_type', 'document_number']); }
+    public function get_person_profile() { $this->callModel('GET', 'get_person_profile', ['id_person']); }
+    public function get_person_stays() { $this->callModel('GET', 'get_person_stays', ['id_person']); }
     public function get_reservation_room() { $this->callModel('GET', 'get_reservation_room', ['id_room']); }
     public function date_reservation() { $this->callModel('GET', 'date_reservation', ['id_room', 'checkin_date', 'checkout_date']); }
     public function update_state() { $this->callModel('POST', 'update_state', ['id_room', 'room_status']); }
