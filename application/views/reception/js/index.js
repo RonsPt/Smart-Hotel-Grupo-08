@@ -49,6 +49,46 @@ $(function () {
     $('#id_guest').on('change', function () {
         const person = people.find(p => String(p.id) === this.value);
         $('#person_summary').text(person ? [person.name, person.nationality, person.phone, person.email].filter(Boolean).join(' · ') : '');
+        $('#btn_view_history').toggleClass('d-none', !person);
+    });
+
+    function escapeHtml(value) { return $('<div>').text(value ?? '').html(); }
+
+    async function loadHistory(idPerson) {
+        $('#history_profile').html('<p class="text-muted">Cargando ficha…</p>');
+        $('#history_stays').html('<tr><td colspan="5" class="text-muted">Cargando…</td></tr>');
+        $('#history_modal').modal('show');
+        try {
+            // 8.2 paso 1: Consultar ficha
+            const profile = await request('Reception/get_person_profile', { id_person: idPerson });
+            if (profile.status !== 'OK') { throw new Error(profile.msg); }
+            const p = profile.data;
+            const nombre = p.business_name || [p.first_names, p.last_names].filter(Boolean).join(' ') || p.name;
+            $('#history_profile').html(`
+                <p class="mb-1"><strong>${escapeHtml(nombre)}</strong> — ${escapeHtml(p.document_type)} ${escapeHtml(p.document_number)}</p>
+                <p class="mb-1">Nacionalidad: ${escapeHtml(p.nationality || 'N/A')} · Nacimiento: ${escapeHtml(p.birth_date || 'N/A')} ${p.birth_place ? '(' + escapeHtml(p.birth_place) + ')' : ''}</p>
+                <p class="mb-1">Contacto: ${escapeHtml(p.phone || 'N/A')} · ${escapeHtml(p.email || 'N/A')}</p>
+                <p class="mb-0">Dirección: ${escapeHtml(p.address || 'N/A')}</p>
+            `);
+            // 8.2 paso 2: Recuperar reservas y estadías anteriores
+            const stays = await request('Reception/get_person_stays', { id_person: idPerson });
+            if (stays.status !== 'OK') { throw new Error(stays.msg); }
+            const rows = stays.data.map(s => `<tr>
+                <td>${escapeHtml(s.checkin_date)} ${escapeHtml(s.checkin_time)}</td>
+                <td>${escapeHtml(s.checkout_date || '—')} ${escapeHtml(s.checkout_time || '')}</td>
+                <td>${escapeHtml(s.room_number)}</td>
+                <td>${escapeHtml(s.type_name)}</td>
+                <td>${escapeHtml(s.status)}</td>
+            </tr>`).join('');
+            $('#history_stays').html(rows || '<tr><td colspan="5" class="text-muted">Sin estadías registradas.</td></tr>');
+        } catch (e) {
+            $('#history_profile').html(`<p class="text-danger">${escapeHtml(e.message || 'No se pudo cargar la ficha.')}</p>`);
+            $('#history_stays').html('<tr><td colspan="5" class="text-danger">No se pudo cargar el historial.</td></tr>');
+        }
+    }
+    $('#btn_view_history').on('click', function () {
+        const idPerson = $('#id_guest').val();
+        if (idPerson) { loadHistory(idPerson); }
     });
     $('#client_document_type, #document_number_reservation').on('input change', clearPerson);
 
@@ -270,6 +310,7 @@ $(function () {
         } catch (e) { notify(e.message || 'No se pudo actualizar.'); }
         finally { button.prop('disabled', false); }
     });
+    $('#fecha_nacimiento').attr('max', new Date().toISOString().slice(0, 10));
     $('#btn_room_status').on('change', loadRooms);
     request('Reception/get_document_types').then(result => {
         if (result.status !== 'OK') { notify(result.msg); return; }
